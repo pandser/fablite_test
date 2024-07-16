@@ -1,36 +1,41 @@
 {% load static %}
 <nav class="navbar navbar-light" style="background-color: lightskyblue">
-  <div class="container">
+  <div>
     {% with request.resolver_match.view_name as view_name %}
-    <ul class="nav nav-pills">
+    <ul>
       {% if user.is_authenticated %}
-      <li class="nav-item">
-        <a class="nav-link link-light"
+      <li>
+        <a
            href="{% url 'users:password_change' %}">
           Изменить пароль
         </a>
       </li>
-      <li class="nav-item">
-        <a class="nav-link link-light" href="{% url 'users:logout' %}">
-          Выйти
+      <li>
+        <a
+           href="{% url 'users:edit_user' %}">
+          Ркдактировать учетную запись
         </a>
       </li>
       <li>
         Пользователь: {{ user.username }}
       </li>
+        <form method="post" action="{% url 'users:logout' %}">
+          {% csrf_token %}
+          <button type="submit">Выйти</button>
+      </form>
       {% else %}
-      <li class="nav-item">
-        <a class="nav-link link-light {% if view_name == 'users:login' %}
+      <li>
+        <a {% if view_name == 'users:login' %}
            active
-           {% endif %}"
+           {% endif %}
            href="{% url 'users:login' %}">
           Войти
         </a>
       </li>
-      <li class="nav-item">
-        <a class="nav-link link-light {% if view_name == 'users:signup' %}
+      <li>
+        <a {% if view_name == 'users:signup' %}
           active
-          {% endif %}"
+          {% endif %}
           href="{% url 'users:signup' %}">
           Регистрация
         </a>

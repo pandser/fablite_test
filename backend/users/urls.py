@@ -3,6 +3,7 @@ from django.contrib.auth.views import (
     PasswordResetCompleteView
 )
 from django.urls import path
+from django.contrib.auth.decorators import login_required
 
 from users import views
 
@@ -24,30 +25,30 @@ urlpatterns = [
         views.SignUp.as_view(),
         name='signup',
     ),
-    path(
-        'password_reset_form/',
-        views.PasswordReset.as_view(),
-        name='password_reset_form',
-    ),
-    path(
-        'password_reset/done/',
-        PasswordResetDoneView.as_view(
-            template_name='users/password_reset_done.html'
-        ),
-        name='password_reset_done',
-    ),
-    path(
-        'reset/<uidb64>/<token>/',
-        views.PasswordResetConfirm.as_view(),
-        name='password_reset_confirm',
-    ),
-    path(
-        'reset/done/',
-        PasswordResetCompleteView.as_view(
-            template_name='users/password_reset_complete.html'
-        ),
-        name='password_reset_complete',
-    ),
+    # path(
+    #     'password_reset_form/',
+    #     views.PasswordReset.as_view(),
+    #     name='password_reset_form',
+    # ),
+    # path(
+    #     'password_reset/done/',
+    #     PasswordResetDoneView.as_view(
+    #         template_name='users/password_reset_done.html'
+    #     ),
+    #     name='password_reset_done',
+    # ),
+    # path(
+    #     'reset/<uidb64>/<token>/',
+    #     views.PasswordResetConfirm.as_view(),
+    #     name='password_reset_confirm',
+    # ),
+    # path(
+    #     'reset/done/',
+    #     PasswordResetCompleteView.as_view(
+    #         template_name='users/password_reset_complete.html'
+    #     ),
+    #     name='password_reset_complete',
+    # ),
     path(
         'password_change/',
         views.PasswordChange.as_view(),
@@ -59,5 +60,20 @@ urlpatterns = [
             template_name='users/password_change_done.html'
         ),
         name='password_change_done',
+    ),
+    path(
+        '',
+        login_required(views.ListUserView.as_view()),
+        name='index'
+    ),
+    path(
+        'edit/',
+        login_required(views.UserView.as_view()),
+        name='edit_user'
+    ),
+    path(
+        'delete/',
+        login_required(views.delete),
+        name='delete_user'
     ),
 ]
