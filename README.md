@@ -51,7 +51,7 @@ python manage.py migrate
 python manage.py createsuperuser
 ```
 
-Проект будет доступен по адресу http://localhost:8000/
+Проект будет доступен по адресу http://localhost:8000/users/
 
 #### Доступные эндпоинты
 
